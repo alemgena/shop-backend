@@ -6,6 +6,8 @@ const winston = require('winston');
 const config = require("./config/config");
 const routers=require('./routes')
 const bodyParser = require("body-parser");
+const {sendEmail}=require('./cron')
+const cron = require('node-cron');
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const logFormat = winston.format.combine(
     winston.format.colorize(),
@@ -45,3 +47,7 @@ app.use((req, res, next) => {
 app.listen(config.port, () => {
     logger.info(`Server started on port ${config.port}`);
 });
+const job=cron.schedule('0 9 * * *', async() => {
+await sendEmail()
+});
+job.start()

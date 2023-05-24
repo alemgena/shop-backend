@@ -8,4 +8,13 @@ router.post(
     validate(shopValidation.add),
     shopController.add
   );
+  router.get(
+    "",
+    shopController.list
+  );
+  router.get(
+    "/:shopId",
+    shopController.get
+  );
   module.exports=router
+  
